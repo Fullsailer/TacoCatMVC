@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,21 @@ namespace TacoCatMVC.Controllers
             for(int i = inputWord.Length -1; i >=0; i--)
             {
                 revWord += inputWord[i];
+            }
+
+            palindrome.RevWord = revWord;
+            revWord = Regex.Replace(revWord.ToLower(), "[^a-zA-Z0-9]+", "");
+            inputWord = Regex.Replace(inputWord.ToLower(), "[^a-zA-Z0-9]+", "");
+
+            if (revWord == inputWord)
+            {
+                palindrome.IsPalindrome = true;
+                palindrome.Message = $"Success {palindrome.InputWord} is a Palidrome";
+            }
+            else
+            {
+                palindrome.IsPalindrome = false;
+                palindrome.Message = $"Sorry {palindrome.InputWord} is not a Palidrome";
             }
 
             return View(palindrome);
