@@ -35,6 +35,21 @@ namespace TacoCatMVC.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Reverse(Palindrome palindrome)
+        {
+            string inputWord = palindrome.InputWord;
+            string revWord = "";
+
+            for(int i = inputWord.Length -1; i >=0; i--)
+            {
+                revWord += inputWord[i];
+            }
+
+            return View(palindrome);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
